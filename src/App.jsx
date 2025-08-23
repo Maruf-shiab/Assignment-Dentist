@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, User, Home, Briefcase, Users, Star, Phone, ChevronLeft, ChevronRight } from 'lucide-react'; 
+import { Calendar, Clock, User, Home, Briefcase, Users, Star, Phone, ChevronLeft, ChevronRight } from 'lucide-react'; // Import Lucide icons
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Slidebar open closed korar jonno code
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // State to manage sidebar open/close
 
   return (
     <div style={{
@@ -16,9 +16,9 @@ function App() {
       boxSizing: 'border-box'
     }}>
 
-      {/* Left Sidebar - jonno code ta rakha holo*/}
+      {/* Left Sidebar - Navigation Menu */}
       <div style={{
-        width: isSidebarOpen ? '280px' : '80px', 
+        width: isSidebarOpen ? '280px' : '80px', // Dynamic width based on state
         minWidth: isSidebarOpen ? '280px' : '80px',
         backgroundColor: 'white',
         boxShadow: '2px 0 8px rgba(0,0,0,0.1)',
@@ -27,20 +27,20 @@ function App() {
         height: '100vh',
         position: 'sticky',
         top: '0',
-        transition: 'width 0.3s ease-in-out, min-width 0.3s ease-in-out' 
+        transition: 'width 0.3s ease-in-out, min-width 0.3s ease-in-out' // Smooth transition
       }}>
 
-        {/* Logo rakha holo */}
+        {/* Logo/Title Area */}
         <div style={{
           padding: '25px 20px',
           borderBottom: '1px solid #e9ecef',
           display: 'flex',
-          justifyContent: isSidebarOpen ? 'space-between' : 'center', 
+          justifyContent: isSidebarOpen ? 'space-between' : 'center', // Center when closed
           alignItems: 'center',
-          height: '70px', 
-          overflow: 'hidden' 
+          height: '70px', // Fixed height for header
+          overflow: 'hidden' // Hide overflow when collapsed
         }}>
-          {isSidebarOpen && ( 
+          {isSidebarOpen && ( // Only show title when sidebar is open
             <h1 style={{
               fontSize: '22px',
               fontWeight: 'bold',
@@ -51,7 +51,7 @@ function App() {
               Smile Studio
             </h1>
           )}
-          {/* Toggle Button sidebar on off bujar jonno */}
+          {/* Toggle Button */}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             style={{
@@ -63,11 +63,45 @@ function App() {
               alignItems: 'center',
               justifyContent: 'center',
               color: '#6c757d',
-              marginLeft: isSidebarOpen ? 'auto' : '0' 
+              marginLeft: isSidebarOpen ? 'auto' : '0' // Push to right when open
             }}
           >
             {isSidebarOpen ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
           </button>
+        </div>
+
+        {/* Amar Menu code Items eikhane */}
+        <div style={{ flex: '1', paddingTop: '20px' }}>
+          {[
+            { name: 'Home', icon: Home, active: false },
+            { name: 'Services', icon: Briefcase, active: true },
+            { name: 'Doctors', icon: Users, active: false },
+            { name: 'Reviews', icon: Star, active: false },
+            { name: 'Contact', icon: Phone, active: false }
+          ].map(item => (
+            <div
+              key={item.name}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '15px 20px',
+                cursor: 'pointer',
+                color: item.active ? '#2196f3' : '#6c757d',
+                backgroundColor: item.active ? '#e3f2fd' : 'transparent',
+                borderRight: item.active ? '4px solid #2196f3' : 'none',
+                transition: 'background-color 0.3s'
+              }}
+              onMouseOver={(e) => {
+                if (!item.active) e.currentTarget.style.backgroundColor = '#f1f3f4';
+              }}
+              onMouseOut={(e) => {
+                if (!item.active) e.currentTarget.style.backgroundColor = 'transparent';
+              }}
+            >
+              <item.icon size={20} style={{ marginRight: isSidebarOpen ? '12px' : '0' }} />
+              {isSidebarOpen && <span style={{ fontWeight: item.active ? '500' : 'normal', whiteSpace: 'nowrap' }}>{item.name}</span>}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -80,8 +114,6 @@ function App() {
         overflowY: 'auto',
         backgroundColor: '#f8f9fa'
       }}>
-
-        {/* Main  Page Title */}
         <h2 style={{
           fontSize: '28px',
           fontWeight: 'bold',
@@ -90,10 +122,9 @@ function App() {
         }}>
           Book an Appointment
         </h2>
-
       </div>
     </div>
   );
 }
 
-export default App;
+export default App;
